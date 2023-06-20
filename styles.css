@@ -1,0 +1,36 @@
+body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title {
+    margin-bottom: 5px;
+}
+
+#forest {
+    margin-bottom: 10px;
+    width: 500px;
+    height: 500px;
+    background-color: #f0f0f0;
+    position: relative;
+}
+
+.treeCrown {
+    width: 5px;
+    height: 5px;
+    background-color: green;
+    border-radius: 50%;
+    position: absolute;
+    cursor: pointer;
+}
+
+.trunk {
+    width: 2px;
+    height: 2px;
+    background-color: brown;
+    border-radius: 50%;
+    position: absolute;
+    cursor: pointer;
+}
+
