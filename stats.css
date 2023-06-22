@@ -1,0 +1,37 @@
+.body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.btn {
+    margin: 10px 15px 15px;
+    width: 15vw;
+    height: 50px;
+    border: 0;
+    cursor: pointer;
+    background-color: rgb(214, 214, 214);
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: rgb(243, 243, 243);
+}
+
+.chart {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+}
+
+.chart-container {
+    height: 80vh;
+}
+
+.title {
+    margin: 0;
+}
