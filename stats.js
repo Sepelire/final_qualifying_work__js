@@ -18,7 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
       { label: '12-15', min: 12, max: 15 }
     ];
   
-    const intervals = dataKey === 'Ширина' ? widthIntervals : crownIntervals;
+    const heightIntervals = [
+      { label: '20-30', min: 20, max: 30 },
+      { label: '30-40', min: 30, max: 40 },
+      { label: '40-50', min: 40, max: 50 }
+    ];
+  
+    const intervals = dataKey === 'Ширина' ? widthIntervals : (dataKey === 'Крона' ? crownIntervals : heightIntervals);
   
     const counts = {};
   
@@ -104,22 +110,17 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('widthRadio').addEventListener('change', () => {
     currentDataKey = 'Ширина';
     createChart(currentDataKey);
-    updateLabelText();
   });
 
   document.getElementById('crownRadio').addEventListener('change', () => {
     currentDataKey = 'Крона';
     createChart(currentDataKey);
-    updateLabelText();
+  });
+
+  document.getElementById('heightRadio').addEventListener('change', () => {
+    currentDataKey = 'Высота';
+    createChart(currentDataKey);
   });
 
   createChart(currentDataKey);
-
-  function updateLabelText() {
-    const label = currentDataKey === 'Ширина' ? 'ширину ствола' : 'размер кроны';
-    const labelElement = document.getElementById('dataLabel');
-    labelElement.textContent = label;
-  }
-
-  updateLabelText();
 });
