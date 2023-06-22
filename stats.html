@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Статистика</title>
+  <title>Статистика деревьев</title>
+  <link rel="stylesheet" href="stats.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
-<body class="body-stats">
-  <h1 class="title">Статистика</h1>
-  <div class="chart-container">
-    <canvas class="chart" id="chart"></canvas>
+<body>
+  <h1>Статистика деревьев</h1>
+  <div>
+    <canvas id="chart" width="400" height="200"></canvas>
   </div>
-
-  <button class="btn btn-stats" id="toggleButton">Поменять график</button>
+  <div>
+    <button id="toggleButton">Переключить данные</button>
+    <button id="loadDataButton">Загрузить данные</button>
+  </div>
+  <div>
+    <span id="dataLabel"></span>
+  </div>
+  <div>
+    <input type="radio" id="widthRadio" name="dataKey" value="Ширина" checked>
+    <label for="widthRadio">Ширина ствола</label>
+    <input type="radio" id="crownRadio" name="dataKey" value="Крона">
+    <label for="crownRadio">Размер кроны</label>
+  </div>
 
   <script src="stats.js"></script>
 </body>

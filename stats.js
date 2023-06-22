@@ -1,5 +1,6 @@
+
 document.addEventListener('DOMContentLoaded', () => {
-  const treeData = JSON.parse(localStorage.getItem('treeData'));
+  let treeData = [];
 
   const chartContainer = document.getElementById('chart');
   let currentDataKey = 'Ширина';
@@ -48,8 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
   
-  
-
   function createChart(dataKey) {
     const chartData = generateChartData(dataKey);
 
@@ -77,7 +76,49 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('toggleButton').addEventListener('click', () => {
     currentDataKey = (currentDataKey === 'Ширина') ? 'Крона' : 'Ширина';
     createChart(currentDataKey);
+    updateLabelText();
+  });
+
+  document.getElementById('loadDataButton').addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const contents = e.target.result;
+        try {
+          treeData = JSON.parse(contents);
+          createChart(currentDataKey);
+        } catch (error) {
+          console.error('Ошибка при чтении файла:', error);
+        }
+      };
+      reader.readAsText(file);
+    });
+    input.click();
+  });
+
+  document.getElementById('widthRadio').addEventListener('change', () => {
+    currentDataKey = 'Ширина';
+    createChart(currentDataKey);
+    updateLabelText();
+  });
+
+  document.getElementById('crownRadio').addEventListener('change', () => {
+    currentDataKey = 'Крона';
+    createChart(currentDataKey);
+    updateLabelText();
   });
 
   createChart(currentDataKey);
+
+  function updateLabelText() {
+    const label = currentDataKey === 'Ширина' ? 'ширину ствола' : 'размер кроны';
+    const labelElement = document.getElementById('dataLabel');
+    labelElement.textContent = label;
+  }
+
+  updateLabelText();
 });

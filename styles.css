@@ -62,8 +62,11 @@
     display: flex;
 }
 
-.buttons {
+.wrap-buttons {
     display: flex;
+}
+
+.wrap-buttons--index {
     flex-direction: column;
 }
 
@@ -79,6 +82,7 @@
 }
 
 .btn-stats {
+    margin: 10px 15px 15px;
     margin-top: 10px;
     margin-bottom: 15px;
     padding: 10px;
