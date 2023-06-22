@@ -73,10 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  document.getElementById('toggleButton').addEventListener('click', () => {
-    currentDataKey = (currentDataKey === 'Ширина') ? 'Крона' : 'Ширина';
-    createChart(currentDataKey);
-    updateLabelText();
+  document.querySelectorAll('input[name="dataKey"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      currentDataKey = radio.value;
+      createChart(currentDataKey);
+    });
   });
 
   document.getElementById('loadDataButton').addEventListener('click', () => {

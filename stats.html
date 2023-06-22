@@ -5,18 +5,15 @@
   <link rel="stylesheet" href="stats.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+<body class="body">
   <h1>Статистика деревьев</h1>
   <div>
     <canvas id="chart" width="400" height="200"></canvas>
   </div>
   <div>
-    <button id="toggleButton">Переключить данные</button>
-    <button id="loadDataButton">Загрузить данные</button>
+    <button class="btn" id="loadDataButton">Загрузить данные</button>
   </div>
-  <div>
-    <span id="dataLabel"></span>
-  </div>
+
   <div>
     <input type="radio" id="widthRadio" name="dataKey" value="Ширина" checked>
     <label for="widthRadio">Ширина ствола</label>
