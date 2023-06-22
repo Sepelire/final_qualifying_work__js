@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', () => {
     const forest = document.getElementById('forest');
-    const treeCount = 1000;
+    const treeCount = 100;
     const treeCrownMinSize = 5;
     const treeCrownMaxSize = 15;
     const rottenWidthMinSize = 1.5;
@@ -67,7 +67,7 @@ window.addEventListener('DOMContentLoaded', () => {
             const x = getRandomInt(0, forestWidth);
             const y = getRandomInt(0, forestHeight);
 
-            const trunkWidth = getRandomFloat(rottenWidthMinSize, rottenWidthMaxSize, 2); // Ширина ствола для гнилого дерева
+            const trunkWidth = (getRandomFloat(rottenWidthMinSize, rottenWidthMaxSize, 2)).toFixed(2); // Ширина ствола для гнилого дерева
             const trunkHeight = (trunkWidth * 10).toFixed(2); // Высота ствола для гнилого дерева
 
             const trunk = document.createElement('div');

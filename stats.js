@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
   
     const crownIntervals = [
+      { label: '0', min: 0, max: 1 },
       { label: '5-8', min: 5, max: 8 },
       { label: '8-12', min: 8, max: 12 },
       { label: '12-15', min: 12, max: 15 }
