@@ -128,7 +128,71 @@ window.addEventListener('DOMContentLoaded', () => {
         link.click();
         document.body.removeChild(link);
     });
+    
+    //Загрузка данных
+    const loadButton = document.getElementById('loadButton');
+    loadButton.addEventListener('click', () => {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.xlsx';
+        fileInput.addEventListener('change', handleFileSelection);
+        fileInput.click();
+    });
+
+    function handleFileSelection(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const data = new Uint8Array(e.target.result);
+                processData(data);
+            };
+            reader.readAsArrayBuffer(file);
+        }
+    }
+
+    function processData(data) {
+        const workbook = XLSX.read(data, { type: 'array' });
+        const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet);
+    
+        clearForest();
+    
+        for (const tree of jsonData) {
+            const treeCrownSize = parseFloat(tree['Крона']);
+            const trunkWidth = parseFloat(tree['Ширина']);
+            const trunkHeight = parseFloat(tree['Высота']);
+            const x = parseFloat(tree['X']);
+            const y = parseFloat(tree['Y']);
+    
+            const treeCrown = document.createElement('div');
+            treeCrown.className = 'treeCrown';
+            treeCrown.style.width = `${treeCrownSize}px`;
+            treeCrown.style.height = `${treeCrownSize}px`;
+            treeCrown.style.left = `${x}px`;
+            treeCrown.style.top = `${y}px`;
+    
+            const trunk = document.createElement('div');
+            trunk.className = 'trunk';
+            trunk.style.width = `${trunkWidth}px`;
+            trunk.style.height = `${trunkWidth}px`;
+            trunk.style.left = `${x + (treeCrownSize / 2) - (trunkWidth / 2)}px`;
+            trunk.style.top = `${y + (treeCrownSize / 2) - (trunkWidth / 2)}px`;
+                
+            forest.appendChild(treeCrown);
+            forest.appendChild(trunk);
+        }
+    }
+    
+
+    function clearForest() {
+        const forest = document.getElementById('forest');
+        while (forest.firstChild) {
+            forest.firstChild.remove();
+        }
+    }
 });
+
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
