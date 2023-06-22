@@ -3,10 +3,13 @@ window.addEventListener('DOMContentLoaded', () => {
     const treeCount = 1000;
     const treeCrownMinSize = 5;
     const treeCrownMaxSize = 15;
+    const rottenWidthMinSize = 1.5;
+    const rottenWidthMaxSize = 4.5;
     const treeMinSpacing = 1;
     const treeMaxSpacing = 3;
     const gridSize = 10;
     const treeData = [];
+    const rottenTreeCount = treeCount - (treeCount * (97 / 100));
 
     const forestWidth = 500;
     const forestHeight = 500;
@@ -22,6 +25,8 @@ window.addEventListener('DOMContentLoaded', () => {
         const treeSpacing = getRandomInt(treeMinSpacing, treeMaxSpacing);
         let x, y;
         let overlapping = false;
+
+        let isRottenTree = i >= treeCount - rottenTreeCount;
 
         let attempts = 0;
         let maxAttempts = 100;
@@ -58,51 +63,84 @@ window.addEventListener('DOMContentLoaded', () => {
             continue;
         }        
 
-        const treeCrown = document.createElement('div');
-        treeCrown.className = 'treeCrown';
-        treeCrown.style.width = `${treeCrownSize}px`;
-        treeCrown.style.height = `${treeCrownSize}px`;
-        treeCrown.style.left = `${x}px`;
-        treeCrown.style.top = `${y}px`;
+        if (isRottenTree) {
+            const x = getRandomInt(0, forestWidth);
+            const y = getRandomInt(0, forestHeight);
 
-        //добавили характеристики "высота и ширина ствола" для дерева
+            const trunkWidth = getRandomFloat(rottenWidthMinSize, rottenWidthMaxSize, 2); // Ширина ствола для гнилого дерева
+            const trunkHeight = (trunkWidth * 10).toFixed(2); // Высота ствола для гнилого дерева
 
-        const trunkWidth = (treeCrownSize / 3).toFixed(2);
-        const trunkHeight = (treeCrownSize * 4).toFixed(2);
+            const trunk = document.createElement('div');
+            trunk.className = 'trunk';
+            trunk.style.width = `${trunkWidth * 2}px`;
+            trunk.style.height = `${trunkWidth * 2}px`;
+            trunk.style.left = `${x}px`;
+            trunk.style.top = `${y}px`;
 
-        const trunk = document.createElement('div');
-        trunk.className = 'trunk';
-        trunk.style.width = `${trunkWidth}px`;
-        trunk.style.height = `${trunkWidth}px`;
-        trunk.style.left = `${x + (treeCrownSize/2) - (trunkWidth/2)}px`;
-        trunk.style.top = `${y + (treeCrownSize/2) - (trunkWidth/2)}px`;
+            trunk.addEventListener('click', () => {
+                alert(`Это гнилое дерево без кроны.\nШирина дерева: ${trunkWidth}м\nВысота ствола: ${trunkHeight}м`);
+            });
 
-        // Добавляем обработчик события "click" для каждого дерева
-        treeCrown.addEventListener('click', () => {
-            // При нажатии на дерево выводим диалоговое окно с данными о размере дерева
-            alert(`Размер кроны: ${treeCrownSize}м\nШирина дерева: ${trunkWidth}м\nВысота ствола: ${trunkHeight}м`);
-        });
+            forest.appendChild(trunk);
 
-        // Добавляем обработчик события "click" для каждого ствола
-        trunk.addEventListener('click', () => {
-            // При нажатии на дерево выводим диалоговое окно с данными о размере дерева
-            alert(`Размер кроны: ${treeCrownSize}м\nШирина дерева: ${trunkWidth}м\nВысота ствола: ${trunkHeight}м`);
-        });
+            treeData.push({
+                Крона: 0, // Размер кроны для гнилого дерева
+                Ширина: trunkWidth,
+                Высота: trunkHeight,
+                X: x,
+                Y: y
+            });
 
-        forest.appendChild(treeCrown);
-        forest.appendChild(trunk);
-
-        treeData.push({
-            Крона: treeCrownSize,
-            Ширина: trunkWidth,
-            Высота: trunkHeight,
-            X: x,
-            Y: y
-        });
-
-        const gridX = Math.floor(x / gridCellSize);
-        const gridY = Math.floor(y / gridCellSize);
-        addToGrid(x, y, treeCrownSize, treeSpacing, gridX, gridY, grid);
+            const gridX = Math.floor(x / gridCellSize);
+            const gridY = Math.floor(y / gridCellSize);
+            addToGrid(x, y, 0, 0, gridX, gridY, grid);
+        } else {
+            const treeCrown = document.createElement('div');
+            treeCrown.className = 'treeCrown';
+            treeCrown.style.width = `${treeCrownSize}px`;
+            treeCrown.style.height = `${treeCrownSize}px`;
+            treeCrown.style.left = `${x}px`;
+            treeCrown.style.top = `${y}px`;
+    
+            //добавили характеристики "высота и ширина ствола" для дерева
+    
+            const trunkWidth = (treeCrownSize * 3 / 10).toFixed(2);
+            const trunkHeight = (treeCrownSize * 3).toFixed(2);
+    
+            const trunk = document.createElement('div');
+            trunk.className = 'trunk';
+            trunk.style.width = `${trunkWidth}px`;
+            trunk.style.height = `${trunkWidth}px`;
+            trunk.style.left = `${x + (treeCrownSize/2) - (trunkWidth/2)}px`;
+            trunk.style.top = `${y + (treeCrownSize/2) - (trunkWidth/2)}px`;
+    
+            // Добавляем обработчик события "click" для каждого дерева
+            treeCrown.addEventListener('click', () => {
+                // При нажатии на дерево выводим диалоговое окно с данными о размере дерева
+                alert(`Размер кроны: ${treeCrownSize}м\nШирина дерева: ${trunkWidth}м\nВысота ствола: ${trunkHeight}м`);
+            });
+    
+            // Добавляем обработчик события "click" для каждого ствола
+            trunk.addEventListener('click', () => {
+                // При нажатии на дерево выводим диалоговое окно с данными о размере дерева
+                alert(`Размер кроны: ${treeCrownSize}м\nШирина дерева: ${trunkWidth}м\nВысота ствола: ${trunkHeight}м`);
+            });
+    
+            forest.appendChild(treeCrown);
+            forest.appendChild(trunk);
+    
+            treeData.push({
+                Крона: treeCrownSize,
+                Ширина: trunkWidth,
+                Высота: trunkHeight,
+                X: x,
+                Y: y
+            });
+    
+            const gridX = Math.floor(x / gridCellSize);
+            const gridY = Math.floor(y / gridCellSize);
+            addToGrid(x, y, treeCrownSize, treeSpacing, gridX, gridY, grid);
+        }
     }
 
     const downloadButtonXLSX = document.getElementById('downloadButton--xlsx');
