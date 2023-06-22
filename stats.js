@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let treeData = [];
 
   const chartContainer = document.getElementById('chart');
-  let currentDataKey = 'Ширина';
+  let currentDataKey = 'pine_width';
 
   function generateChartData(dataKey) {
     const widthIntervals = [
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       { label: '40-50', min: 40, max: 50 }
     ];
   
-    const intervals = dataKey === 'Ширина' ? widthIntervals : (dataKey === 'Крона' ? crownIntervals : heightIntervals);
+    const intervals = dataKey === 'pine_width' ? widthIntervals : (dataKey === 'pine_crown' ? crownIntervals : heightIntervals);
   
     const counts = {};
   
@@ -109,17 +109,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('widthRadio').addEventListener('change', () => {
-    currentDataKey = 'Ширина';
+    currentDataKey = 'pine_width';
     createChart(currentDataKey);
   });
 
   document.getElementById('crownRadio').addEventListener('change', () => {
-    currentDataKey = 'Крона';
+    currentDataKey = 'pine_crown';
     createChart(currentDataKey);
   });
 
   document.getElementById('heightRadio').addEventListener('change', () => {
-    currentDataKey = 'Высота';
+    currentDataKey = 'pine_height';
     createChart(currentDataKey);
   });
 

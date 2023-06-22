@@ -84,9 +84,9 @@ window.addEventListener('DOMContentLoaded', () => {
             forest.appendChild(trunk);
 
             pineData.push({
-                Крона: 0, // Размер кроны для гнилого дерева
-                Ширина: trunkWidth,
-                Высота: trunkHeight,
+                pine_crown: 0, // Размер кроны для гнилого дерева
+                pine_width: trunkWidth,
+                pine_height: trunkHeight,
                 X: x,
                 Y: y
             });
@@ -130,9 +130,9 @@ window.addEventListener('DOMContentLoaded', () => {
             forest.appendChild(trunk);
     
             pineData.push({
-                Крона: pineCrownSize,
-                Ширина: trunkWidth,
-                Высота: trunkHeight,
+                pine_crown: pineCrownSize,
+                pine_width: trunkWidth,
+                pine_height: trunkHeight,
                 X: x,
                 Y: y
             });
@@ -197,9 +197,9 @@ window.addEventListener('DOMContentLoaded', () => {
         clearForest();
     
         for (const pine of jsonData) {
-            const pineCrownSize = parseFloat(pine['Крона']);
-            const trunkWidth = parseFloat(pine['Ширина']);
-            const trunkHeight = parseFloat(pine['Высота']);
+            const pineCrownSize = parseFloat(pine['pine_crown']);
+            const trunkWidth = parseFloat(pine['pine_width']);
+            const trunkHeight = parseFloat(pine['pine_height']);
             const x = parseFloat(pine['X']);
             const y = parseFloat(pine['Y']);
     
