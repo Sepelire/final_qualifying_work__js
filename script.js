@@ -1,32 +1,32 @@
 window.addEventListener('DOMContentLoaded', () => {
     const forest = document.getElementById('forest');
-    const treeCount = 100;
-    const treeCrownMinSize = 5;
-    const treeCrownMaxSize = 15;
+    const pineCount = 1000;
+    const pineCrownMinSize = 5;
+    const pineCrownMaxSize = 15;
     const rottenWidthMinSize = 1.5;
     const rottenWidthMaxSize = 4.5;
-    const treeMinSpacing = 1;
-    const treeMaxSpacing = 3;
+    const pineMinSpacing = 1;
+    const pineMaxSpacing = 3;
     const gridSize = 10;
-    const treeData = [];
-    const rottenTreeCount = treeCount - (treeCount * (97 / 100));
+    const pineData = [];
+    const rottenPineCount = pineCount - (pineCount * (97 / 100));
 
     const forestWidth = 500;
     const forestHeight = 500;
-    const gridCellSize = Math.max(treeCrownMaxSize, treeMaxSpacing) * 2;
+    const gridCellSize = Math.max(pineCrownMaxSize, pineMaxSpacing) * 2;
 
     const gridWidth = Math.ceil(forestWidth / gridCellSize);
     const gridHeight = Math.ceil(forestHeight / gridCellSize);
 
     const grid = createGrid(gridWidth, gridHeight);
 
-    for (let i = 0; i < treeCount; i++) {
-        const treeCrownSize = getRandomFloat(treeCrownMinSize, treeCrownMaxSize, 2);
-        const treeSpacing = getRandomInt(treeMinSpacing, treeMaxSpacing);
+    for (let i = 0; i < pineCount; i++) {
+        const pineCrownSize = getRandomFloat(pineCrownMinSize, pineCrownMaxSize, 2);
+        const pineSpacing = getRandomInt(pineMinSpacing, pineMaxSpacing);
         let x, y;
         let overlapping = false;
 
-        let isRottenTree = i >= treeCount - rottenTreeCount;
+        let isRottenPine = i >= pineCount - rottenPineCount;
 
         let attempts = 0;
         let maxAttempts = 100;
@@ -40,16 +40,16 @@ window.addEventListener('DOMContentLoaded', () => {
             x = gridX * gridCellSize + gridCellSize / 2 + offsetX;
             y = gridY * gridCellSize + gridCellSize / 2 + offsetY;
         
-            const minX = treeCrownSize / 2;
-            const maxX = forestWidth - treeCrownSize / 2;
-            const minY = treeCrownSize / 2;
-            const maxY = forestHeight - treeCrownSize / 2;
+            const minX = pineCrownSize / 2;
+            const maxX = forestWidth - pineCrownSize / 2;
+            const minY = pineCrownSize / 2;
+            const maxY = forestHeight - pineCrownSize / 2;
         
             x = Math.min(maxX, Math.max(minX, x));
             y = Math.min(maxY, Math.max(minY, y));
 
             // Проверка пересечения с другими деревьями
-            overlapping = checkOverlap(x, y, treeCrownSize, treeSpacing, gridCellSize, gridWidth, gridHeight, grid);
+            overlapping = checkOverlap(x, y, pineCrownSize, pineSpacing, gridCellSize, gridWidth, gridHeight, grid);
         
             attempts++;
         
@@ -63,7 +63,7 @@ window.addEventListener('DOMContentLoaded', () => {
             continue;
         }        
 
-        if (isRottenTree) {
+        if (isRottenPine) {
             const x = getRandomInt(0, forestWidth);
             const y = getRandomInt(0, forestHeight);
 
@@ -83,7 +83,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
             forest.appendChild(trunk);
 
-            treeData.push({
+            pineData.push({
                 Крона: 0, // Размер кроны для гнилого дерева
                 Ширина: trunkWidth,
                 Высота: trunkHeight,
@@ -95,42 +95,42 @@ window.addEventListener('DOMContentLoaded', () => {
             const gridY = Math.floor(y / gridCellSize);
             addToGrid(x, y, 0, 0, gridX, gridY, grid);
         } else {
-            const treeCrown = document.createElement('div');
-            treeCrown.className = 'treeCrown';
-            treeCrown.style.width = `${treeCrownSize}px`;
-            treeCrown.style.height = `${treeCrownSize}px`;
-            treeCrown.style.left = `${x}px`;
-            treeCrown.style.top = `${y}px`;
+            const pineCrown = document.createElement('div');
+            pineCrown.className = 'pineCrown';
+            pineCrown.style.width = `${pineCrownSize}px`;
+            pineCrown.style.height = `${pineCrownSize}px`;
+            pineCrown.style.left = `${x}px`;
+            pineCrown.style.top = `${y}px`;
     
             //добавили характеристики "высота и ширина ствола" для дерева
     
-            const trunkWidth = (treeCrownSize * 3 / 10).toFixed(2);
-            const trunkHeight = (treeCrownSize * 3).toFixed(2);
+            const trunkWidth = (pineCrownSize * 3 / 10).toFixed(2);
+            const trunkHeight = (pineCrownSize * 3).toFixed(2);
     
             const trunk = document.createElement('div');
             trunk.className = 'trunk';
             trunk.style.width = `${trunkWidth}px`;
             trunk.style.height = `${trunkWidth}px`;
-            trunk.style.left = `${x + (treeCrownSize/2) - (trunkWidth/2)}px`;
-            trunk.style.top = `${y + (treeCrownSize/2) - (trunkWidth/2)}px`;
+            trunk.style.left = `${x + (pineCrownSize/2) - (trunkWidth/2)}px`;
+            trunk.style.top = `${y + (pineCrownSize/2) - (trunkWidth/2)}px`;
     
             // Добавляем обработчик события "click" для каждого дерева
-            treeCrown.addEventListener('click', () => {
+            pineCrown.addEventListener('click', () => {
                 // При нажатии на дерево выводим диалоговое окно с данными о размере дерева
-                alert(`Размер кроны: ${treeCrownSize}м\nШирина дерева: ${trunkWidth}м\nВысота ствола: ${trunkHeight}м`);
+                alert(`Размер кроны: ${pineCrownSize}м\nШирина дерева: ${trunkWidth}м\nВысота ствола: ${trunkHeight}м`);
             });
     
             // Добавляем обработчик события "click" для каждого ствола
             trunk.addEventListener('click', () => {
                 // При нажатии на дерево выводим диалоговое окно с данными о размере дерева
-                alert(`Размер кроны: ${treeCrownSize}м\nШирина дерева: ${trunkWidth}м\nВысота ствола: ${trunkHeight}м`);
+                alert(`Размер кроны: ${pineCrownSize}м\nШирина дерева: ${trunkWidth}м\nВысота ствола: ${trunkHeight}м`);
             });
     
-            forest.appendChild(treeCrown);
+            forest.appendChild(pineCrown);
             forest.appendChild(trunk);
     
-            treeData.push({
-                Крона: treeCrownSize,
+            pineData.push({
+                Крона: pineCrownSize,
                 Ширина: trunkWidth,
                 Высота: trunkHeight,
                 X: x,
@@ -139,21 +139,21 @@ window.addEventListener('DOMContentLoaded', () => {
     
             const gridX = Math.floor(x / gridCellSize);
             const gridY = Math.floor(y / gridCellSize);
-            addToGrid(x, y, treeCrownSize, treeSpacing, gridX, gridY, grid);
+            addToGrid(x, y, pineCrownSize, pineSpacing, gridX, gridY, grid);
         }
     }
 
     const downloadButtonXLSX = document.getElementById('downloadButton--xlsx');
     downloadButtonXLSX.addEventListener('click', () => {
-        exportToExcel(treeData, 'данные_деревьев.xlsx');
+        exportToExcel(pineData, 'данные_деревьев.xlsx');
     });
 
-    localStorage.setItem('treeData', JSON.stringify(treeData));
+    localStorage.setItem('pineData', JSON.stringify(pineData));
 
     const downloadButtonJSON = document.getElementById('downloadButton--json');
     downloadButtonJSON.addEventListener('click', () => {
         const filename = 'данные.json';
-        const data = JSON.stringify(treeData, null, 2);
+        const data = JSON.stringify(pineData, null, 2);
         const blob = new Blob([data], { type: 'application/json' });
 
         // Создание ссылки для скачивания
@@ -196,28 +196,28 @@ window.addEventListener('DOMContentLoaded', () => {
     
         clearForest();
     
-        for (const tree of jsonData) {
-            const treeCrownSize = parseFloat(tree['Крона']);
-            const trunkWidth = parseFloat(tree['Ширина']);
-            const trunkHeight = parseFloat(tree['Высота']);
-            const x = parseFloat(tree['X']);
-            const y = parseFloat(tree['Y']);
+        for (const pine of jsonData) {
+            const pineCrownSize = parseFloat(pine['Крона']);
+            const trunkWidth = parseFloat(pine['Ширина']);
+            const trunkHeight = parseFloat(pine['Высота']);
+            const x = parseFloat(pine['X']);
+            const y = parseFloat(pine['Y']);
     
-            const treeCrown = document.createElement('div');
-            treeCrown.className = 'treeCrown';
-            treeCrown.style.width = `${treeCrownSize}px`;
-            treeCrown.style.height = `${treeCrownSize}px`;
-            treeCrown.style.left = `${x}px`;
-            treeCrown.style.top = `${y}px`;
+            const pineCrown = document.createElement('div');
+            pineCrown.className = 'pineCrown';
+            pineCrown.style.width = `${pineCrownSize}px`;
+            pineCrown.style.height = `${pineCrownSize}px`;
+            pineCrown.style.left = `${x}px`;
+            pineCrown.style.top = `${y}px`;
     
             const trunk = document.createElement('div');
             trunk.className = 'trunk';
             trunk.style.width = `${trunkWidth}px`;
             trunk.style.height = `${trunkWidth}px`;
-            trunk.style.left = `${x + (treeCrownSize / 2) - (trunkWidth / 2)}px`;
-            trunk.style.top = `${y + (treeCrownSize / 2) - (trunkWidth / 2)}px`;
+            trunk.style.left = `${x + (pineCrownSize / 2) - (trunkWidth / 2)}px`;
+            trunk.style.top = `${y + (pineCrownSize / 2) - (trunkWidth / 2)}px`;
                 
-            forest.appendChild(treeCrown);
+            forest.appendChild(pineCrown);
             forest.appendChild(trunk);
         }
     }
@@ -270,11 +270,11 @@ function checkOverlap(x, y, size, spacing, gridCellSize, gridWidth, gridHeight, 
     const nearbyCells = getNearbyCells(gridX, gridY, gridWidth, gridHeight, grid); // Добавляем gridWidth и gridHeight в параметры
 
     for (const cell of nearbyCells) {
-        for (const treeCrown of cell) {
-            const dx = x - treeCrown.x;
-            const dy = y - treeCrown.y;
+        for (const pineCrown of cell) {
+            const dx = x - pineCrown.x;
+            const dy = y - pineCrown.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
-            const minDistance = treeCrown.spacing + size + spacing;
+            const minDistance = pineCrown.spacing + size + spacing;
             if (distance < minDistance) {
                 return true;
             }
